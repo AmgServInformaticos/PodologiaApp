@@ -1,0 +1,763 @@
+<style>
+        /* Paleta de Colores de PodologíAPP: Gris, Negro, Rosa Oscuro */
+        :root {
+            --primary-dark: #2C2C2C; /* Negro/Gris Oscuro principal (Títulos, texto principal) */
+            --accent-pink: #D81B60; /* Rosa Oscuro vibrante (Acentos, botones, checks) */
+            --light-grey: #F5F5F5; /* Gris Claro (Fondo principal, fondos de sección) */
+            --medium-grey: #9E9E9E; /* Gris Medio (Bordes, tipografía secundaria) */
+            --header-dark-tinto: #5C000B; /* Nuevo color base tinto oscuro */
+            --header-light-tinto: #9E102F; /* Nuevo color tinto más claro */
+            --text-main: #333;
+            --text-secondary: #555;
+            --background-card: #ffffff;
+            --shadow-light: rgba(0, 0, 0, 0.05);
+            --shadow-medium: rgba(0, 0, 0, 0.15);
+            --shadow-focus: rgba(216, 27, 96, 0.4); /* Sombra de foco rosa */
+            --border-color: #E0E0E0; /* Gris muy claro para bordes */
+        }
+
+        /* Estilos Generales y Reseteo */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--light-grey);
+            /* Fondo con textura sutil en gris claro */
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect x="0" y="0" width="100" height="100" fill="%23F5F5F5"/><circle cx="50" cy="50" r="1" fill="%23ECECEC" opacity="0.8"/><circle cx="25" cy="75" r="1" fill="%23ECECEC" opacity="0.8"/><circle cx="75" cy="25" r="1" fill="%23ECECEC" opacity="0.8"/></svg>');
+            background-repeat: repeat;
+            background-size: 100px;
+            color: var(--text-main);
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 20px auto;
+            background-color: var(--background-card);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px var(--shadow-medium);
+            overflow: hidden;
+        }
+
+        /* Encabezado Principal */
+        .main-header {
+            /* Degradado de Tinto a Tinto más oscuro */
+            background: linear-gradient(to right, var(--header-light-tinto), var(--header-dark-tinto));
+            color: white;
+            padding: 30px;
+            text-align: left;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+            border-radius: 20px 20px 0 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .main-header-content {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start; /* Alineación del contenido del texto */
+        }
+
+        .main-header h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.8em;
+            font-weight: 700;
+            margin-bottom: 5px;
+            letter-spacing: 1px;
+            color: white;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.4);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .main-header h1 .title-svg-icon {
+            fill: white; /* Icono en blanco, según solicitud */
+            width: 55px; /* Icono más grande */
+            height: 55px;
+            filter: drop-shadow(1px 1px 2px rgba(0,0,0,0.5));
+        }
+
+        .main-header p {
+            font-family: 'Inter', sans-serif;
+            font-size: 1em; /* AJUSTADO: Se redujo ligeramente el tamaño del subtítulo */
+            font-weight: 400;
+            color: rgba(255, 255, 255, 0.8);
+            margin-top: 0;
+            font-style: italic;
+            /* Alineación: Ancho aproximado del SVG (55px) + gap (15px) = 70px */
+            margin-left: 70px; 
+        }
+
+        .header-logo-area {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .clinic-logo-preview {
+            width: 100px;
+            height: 100px;
+            border: 3px dashed rgba(255,255,255,0.4);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background-color: rgba(255,255,255,0.1);
+            cursor: pointer;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        /* CORREGIDO: Estilo para el LOGOTIPO, quita el punteado al cargar la imagen. */
+        .clinic-logo-preview:hover {
+            border-color: var(--accent-pink);
+        }
+        .clinic-logo-preview.has-image {
+             border: 3px solid rgba(255,255,255,0.4); /* Borde sólido para mantener la forma, puedes cambiarlo a transparent si lo quieres invisible */
+        }
+        /* Fin CORRECCIÓN Logotipo */
+
+        .clinic-logo-preview img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 2;
+        }
+        
+        .clinic-logo-preview .placeholder-content {
+            color: rgba(255,255,255,0.7);
+            font-size: 0.8em;
+            text-align: center;
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        /* Contenido del formulario principal */
+        form {
+            padding: 20px 30px 30px;
+        }
+
+        /* Secciones */
+        section {
+            padding: 25px;
+            margin-bottom: 25px;
+            border-radius: 15px;
+            background-color: var(--light-grey); /* Fondo de sección Gris Claro */
+            box-shadow: 0 4px 15px var(--shadow-light);
+            border: 1px solid var(--border-color);
+        }
+
+        h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.8em;
+            color: var(--primary-dark); /* Título en Gris Oscuro */
+            margin-top: 0;
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--medium-grey); /* División en Gris Medio */
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        h2 svg {
+            /* Por defecto en Rosa Acento, pero los SVG específicos tienen color de relleno individual */
+            fill: var(--accent-pink); 
+            width: 30px;
+            height: 30px;
+        }
+        
+        /* Estilo específico para los íconos de sección SVG */
+        #specialist-info-icon,
+        #patient-data-icon,
+        #pathological-history-icon,
+        #podiatric-exploration-icon, /* Nuevo ícono para Exploración Podológica */
+        #treatment-plan-icon {
+            width: 38px;
+            height: 38px;
+            fill: var(--primary-dark); /* Color negro solicitado */
+        }
+        
+        /* Ajuste de tamaño para el nuevo ícono (Footprints) */
+        #podiatric-exploration-icon {
+            width: 42px; /* Ligeramente más grande para que destaque */
+            height: 42px;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--text-secondary); /* Labels en Gris Medio */
+            font-size: 0.95em;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        input[type="date"],
+        input[type="number"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 12px 18px;
+            border: 1px solid var(--border-color);
+            border-radius: 25px;
+            background-color: white;
+            color: var(--text-main);
+            font-size: 1em;
+            outline: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        textarea {
+            min-height: 90px;
+            resize: vertical;
+            border-radius: 15px;
+        }
+        
+        /* ESTILO PARA CONSENTIMIENTO INFORMADO */
+        #consentText {
+            line-height: 2 !important; /* Mayor separación entre renglones */
+            font-weight: 700; /* Texto en negritas */
+            color: var(--primary-dark) !important; /* Color de texto oscuro para resaltar negritas */
+            white-space: pre-wrap; /* Mantiene saltos de línea y espacios en blanco */
+        }
+        /* FIN ESTILO PARA CONSENTIMIENTO INFORMADO */
+
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="tel"]:focus,
+        input[type="date"]:focus,
+        input[type="number"]:focus,
+        textarea:focus,
+        select:focus {
+            border-color: var(--accent-pink); /* Borde de foco en Rosa Acento */
+            box-shadow: 0 0 10px var(--shadow-focus), 0 4px 12px rgba(0, 0, 0, 0.1);
+            background-color: #FFF8FA; /* Fondo muy claro con toque rosa */
+        }
+
+        /* Checkboxes y Radios Personalizados (tipo círculo con punto) */
+        .checkbox-group,
+        .radio-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin-top: 10px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border-color);
+            background-color: white;
+            padding: 15px;
+            border-radius: 15px;
+            box-shadow: 0 2px 8px var(--shadow-light);
+        }
+
+        .checkbox-group label,
+        .radio-group label {
+            display: flex;
+            align-items: center;
+            font-weight: normal;
+            cursor: pointer;
+            color: var(--text-secondary);
+            margin-bottom: 0;
+            font-size: 0.9em;
+        }
+
+        .checkbox-group input[type="checkbox"],
+        .radio-group input[type="radio"] {
+            margin-right: 10px;
+            width: 20px;
+            height: 20px;
+            -webkit-appearance: none;
+            appearance: none;
+            border: 2px solid var(--medium-grey); /* Borde en Gris Medio */
+            border-radius: 50%;
+            background-color: white;
+            transition: all 0.2s ease-in-out;
+            position: relative;
+            cursor: pointer;
+            flex-shrink: 0;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .checkbox-group input[type="checkbox"]:checked,
+        .radio-group input[type="radio"]:checked {
+            background-color: var(--accent-pink); /* Rosa Acento al marcar */
+            border-color: var(--accent-pink);
+            box-shadow: 0 0 0 4px rgba(216, 27, 96, 0.2), inset 0 1px 3px rgba(0,0,0,0.2);
+        }
+
+        .checkbox-group input[type="checkbox"]:checked::before,
+        .radio-group input[type="radio"]:checked::before {
+            content: '';
+            display: block;
+            width: 8px;
+            height: 8px;
+            background-color: white;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: popIn 0.2s ease-out forwards;
+        }
+
+        @keyframes popIn {
+            0% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+            80% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
+            100% { transform: translate(-50%, -50%) scale(1); }
+        }
+
+        /* Campo "Otro" dinámico */
+        .other-input {
+            display: none;
+            margin-top: 10px;
+            width: calc(100% - 30px);
+            margin-left: 30px;
+            border-radius: 15px !important;
+            box-shadow: 0 2px 5px var(--shadow-light) !important;
+            padding: 8px 15px !important;
+            font-size: 0.9em !important;
+            background-color: #fff;
+        }
+        
+        /* Stress Level Slider */
+        .stress-slider-container {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-top: 10px;
+            background-color: white;
+            border: 1px solid var(--border-color);
+            border-radius: 15px;
+            padding: 10px 20px;
+            box-shadow: 0 2px 8px var(--shadow-light);
+        }
+
+        #stressLevel {
+            flex-grow: 1;
+            -webkit-appearance: none;
+            width: 100%;
+            height: 10px;
+            background: var(--border-color);
+            outline: none;
+            opacity: 0.8;
+            -webkit-transition: .2s;
+            transition: opacity .2s;
+            border-radius: 5px;
+        }
+
+        #stressLevel::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: var(--accent-pink);
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2), 0 0 0 4px rgba(216, 27, 96, 0.2);
+            border: 3px solid white;
+        }
+
+        .stress-value {
+            font-size: 1.1em;
+            font-weight: bold;
+            color: var(--primary-dark);
+            min-width: 25px;
+            text-align: center;
+        }
+        
+        /* Upload de Imagen */
+        .image-upload-area {
+            border: 2px dashed var(--medium-grey);
+            background-color: white;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: border-color 0.3s, box-shadow 0.3s;
+            box-shadow: 0 2px 8px var(--shadow-light);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 150px;
+            position: relative;
+        }
+
+        .image-upload-area:hover {
+            border-color: var(--accent-pink);
+            box-shadow: 0 0 0 3px rgba(216, 27, 96, 0.15), 0 4px 10px var(--shadow-medium);
+        }
+        
+        /* CORREGIDO: Estilo para las imágenes clínicas, quita el punteado al subir la imagen */
+        .image-upload-area.has-image {
+             border: 2px solid var(--border-color); /* Borde sólido sutil al cargar */
+        }
+        /* Fin CORRECCIÓN Imágenes Clínicas */
+
+        .image-upload-area .camera-icon {
+            fill: var(--medium-grey);
+            width: 40px;
+            height: 40px;
+            margin-bottom: 10px;
+        }
+        .image-upload-area .upload-text {
+            color: var(--text-secondary);
+            font-size: 0.9em;
+        }
+
+        .image-upload-area img.uploaded-image {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 15px;
+            z-index: 2;
+        }
+        
+        /* Estilo para contenedor de múltiples imágenes clínicas */
+        .clinical-images-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        /* Signature Pad */
+        .signature-pad-container {
+            margin-top: 20px;
+            border: 2px solid var(--accent-pink); /* Borde de firma en Rosa Acento */
+            border-radius: 15px;
+            overflow: hidden;
+            background-color: var(--background-card);
+            box-shadow: 0 4px 10px var(--shadow-medium);
+        }
+
+        .signature-canvas {
+            width: 100%;
+            height: 150px;
+            border-bottom: 1px solid var(--border-color);
+            background-color: white;
+            touch-action: none;
+        }
+
+        .signature-buttons {
+            display: flex;
+            justify-content: flex-end;
+            padding: 8px;
+            gap: 10px;
+            background-color: var(--light-grey);
+        }
+
+        .signature-buttons button {
+            background-color: var(--medium-grey);
+            color: white;
+            padding: 6px 12px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.85em;
+            transition: background-color 0.3s ease;
+        }
+
+        .signature-buttons button:hover {
+            background-color: var(--primary-dark);
+        }
+
+        /* Botones de Acción */
+        .button-group {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .button-group button {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .button-group button.report-btn {
+            /* Degradado de Gris a Rosa Acento */
+            background: linear-gradient(to right, var(--primary-dark), var(--accent-pink));
+            color: white;
+        }
+
+        .button-group button.report-btn:hover {
+            background: linear-gradient(to right, #1F1F1F, #C01853);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .button-group button.reset-btn {
+            background-color: var(--medium-grey);
+            color: white;
+        }
+
+        .button-group button.reset-btn:hover {
+            background-color: #757575;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+        }
+        /* El botón de guardar valoración (submit) se oculta en esta versión de reporte, pero se mantiene el estilo base */
+        .button-group button.submit-btn {
+            background-color: var(--medium-grey);
+            color: white;
+            display: none; /* Ocultar para priorizar el reporte */
+        }
+
+        /* Estilo para las opciones de Antecedentes y Evaluación Clínica */
+        .evaluation-list label {
+            padding: 8px 0;
+            border-bottom: 1px dotted var(--border-color);
+        }
+
+        .evaluation-list label:last-child {
+            border-bottom: none;
+        }
+        
+        .evaluation-group {
+            padding: 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            margin-bottom: 15px;
+            background-color: white;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.03);
+        }
+        
+        .evaluation-group .radio-group,
+        .evaluation-group .checkbox-group {
+            margin: 0;
+            padding: 10px;
+            border: none;
+            box-shadow: none;
+            background-color: transparent;
+        }
+        
+        .evaluation-group h4 {
+            font-size: 1.1em;
+            color: var(--primary-dark);
+            margin-bottom: 10px;
+            padding-bottom: 5px;
+            border-bottom: 1px dashed var(--medium-grey);
+            font-weight: 700;
+        }
+
+
+        /* --- Reporte Visual --- */
+        #reportContainer {
+            margin-top: 40px;
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            background-color: white;
+            display: none;
+            font-family: 'Inter', sans-serif;
+            color: var(--text-main);
+            position: relative;
+        }
+
+        /* Busca esta sección en tu <style> y asegúrate de que tenga estas propiedades */
+#reportContent {
+    padding: 40px !important; /* Aumentamos el margen interno */
+    background-color: white !important;
+    width: 800px; /* Definimos un ancho fijo para que la captura sea consistente */
+    margin: 0 auto;
+}
+
+        .report-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-bottom: 20px;
+            border-bottom: 3px solid var(--primary-dark);
+            margin-bottom: 30px;
+        }
+
+        .report-clinic-info h3 {
+            margin: 0;
+            color: var(--primary-dark);
+            font-size: 1.8em;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .report-clinic-info p {
+            margin: 5px 0;
+            font-size: 0.9em;
+            color: var(--text-secondary);
+        }
+
+        .report-title {
+            text-align: center;
+            font-size: 2.2em;
+            color: var(--accent-pink); /* Título principal del reporte en Rosa Acento */
+            font-family: 'Montserrat', sans-serif;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .report-section {
+            margin-bottom: 25px;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 20px;
+            background-color: var(--light-grey);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .report-section h3 {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.4em;
+            color: var(--primary-dark);
+            margin-top: 0;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 1px dashed var(--medium-grey);
+            font-weight: 700;
+        }
+
+        .report-content p {
+            margin: 8px 0;
+            font-size: 0.95em;
+            line-height: 1.4;
+        }
+
+        .report-content strong {
+            color: var(--primary-dark);
+            margin-right: 5px;
+            font-weight: 600;
+        }
+        
+        .report-content .consent-text-report {
+            line-height: 2 !important; /* Ajuste para el reporte */
+            font-weight: 700;
+            color: var(--primary-dark);
+        }
+
+        .report-image-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 15px;
+            justify-content: center;
+        }
+        
+        .report-signatures {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px dashed var(--medium-grey);
+        }
+
+        .report-signature-box {
+            text-align: center;
+            flex: 1;
+            padding: 0 15px;
+            padding-bottom: 15px;
+        }
+
+        .report-signature-box img {
+            max-width: 200px;
+            height: auto;
+            border-bottom: 2px solid var(--primary-dark);
+            margin-bottom: 10px;
+            display: block;
+            margin: 0 auto 10px auto;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .main-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+            .main-header h1 {
+                font-size: 2em;
+            }
+            .main-header p {
+                /* Ajuste responsivo para que el subtítulo no se desalinee tanto */
+                margin-left: 65px; 
+                font-size: 1em;
+            }
+            .grid-container {
+                grid-template-columns: 1fr;
+            }
+            .checkbox-group, .radio-group {
+                grid-template-columns: 1fr;
+            }
+            .other-input {
+                width: 100%;
+                margin-left: 0;
+            }
+            .button-group {
+                flex-direction: column;
+                gap: 15px;
+            }
+            .button-group button {
+                width: 100%;
+            }
+            .report-signatures {
+                flex-direction: column;
+                gap: 20px;
+            }
+            .clinical-images-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .main-header p {
+                /* Ajuste para pantallas aún más pequeñas */
+                margin-left: 55px; 
+            }
+        }
+    </style>
